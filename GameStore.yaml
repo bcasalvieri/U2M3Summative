@@ -1,0 +1,532 @@
+openapi: 3.0.0
+info:
+  title: Game Store
+  description: A simple service that simulates a game store.
+  version: 0.0.1
+servers: 
+  - url: http://localhost:8080
+    description: Local dev server
+paths:
+  /games:
+    get:
+      summary: Retrieves all games in store inventory.
+      responses:
+        '200':
+          description: Array containing all games in inventory.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameList'
+    post:
+      summary: Creates a game.
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+      responses:
+        '201':
+          description: Created game object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '422':
+          description: Incomplete game information.
+  /games/title/{title}:
+    get:
+      summary: Retrieve a game by title.
+      parameters:
+        - in: path
+          name: title
+          required: true
+          description: Title of game you would like to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of games matching title.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameList'
+        '404':
+          description: No games matching title.
+    /games/studio/{studio}:
+      get:
+        summary: Retrieve a game by studio.
+        parameters:
+          - in: path
+            name: studio
+            required: true
+            description: Studio of game you would like to retrieve.
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Array of games matching given studio.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/GameList'
+          '404':
+            description: No games matching studio.
+    /games/rating/{rating}:
+      get:
+        summary: Retrieve a game by rating.
+        parameters:
+          - in: path
+            name: rating
+            required: true
+            description: Rating of game you would like to retrieve.
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Array of games matching rating.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/GameList'
+          '404':
+            description: No games matching rating.
+  /game/{id}:
+    get:
+      summary: Retrieve a game by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of game you would like to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '404':
+          description: No game matching given ID.
+    put:
+      summary: Update a game by ID
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of game you would like to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No game matching given ID.
+        '422':
+          description: Incomplete game information.
+    delete:
+      summary: Delete game by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of game you would like to delete.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No game matching ID.
+  
+  /consoles:
+    get:
+      summary: Retrieves all consoles in store inventory.
+      responses:
+        '200':
+          description: Array containing all consoles in inventory.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleList'
+    post:
+      summary: Creates a console.
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Console'
+      responses:
+        '201':
+          description: Created console object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Console'
+        '422':
+          description: Incomplete console information.
+  /consoles/manufacturer/{manufacturer}:
+    get:
+      summary: Retrieve consoles by manufacturer.
+      parameters:
+        - in: path
+          name: manufacturer
+          required: true
+          description: Manufacturer of console you would like to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of consoles matching manufacturer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsoleList'
+        '404':
+          description: No consoles matching rating.
+  /console/{id}:
+    get:
+      summary: Retrieve a console by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of console you would like to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Console'
+        '404':
+          description: No console matching given ID.
+    put:
+      summary: Update a console by ID
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of console you would like to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Console'
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No console matching given ID.
+        '422':
+          description: Incomplete console information.
+    delete:
+      summary: Delete console by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of console you would like to delete.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No console matching ID.
+          
+  /tshirts:
+    get:
+      summary: Retrieves all t-shirts in store inventory.
+      responses:
+        '200':
+          description: Array containing all t-shirts in inventory.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirtList'
+    post:
+      summary: Creates a T-shirt.
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirt'
+      responses:
+        '201':
+          description: Created t-shirt object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirt'
+        '422':
+          description: Incomplete t-shirt information.
+  /t-shirts/size/{size}:
+    get:
+      summary: Retrieve t-shirts by size.
+      parameters:
+        - in: path
+          name: size
+          required: true
+          description: Size of t-shirt you would like to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of t-shirts matching size.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirtList'
+        '404':
+          description: No t-shirts matching size.
+    /t-shirts/color/{color}:
+      get:
+        summary: Retrieve t-shirts by color.
+        parameters:
+          - in: path
+            name: color
+            required: true
+            description: Color of t-shirt you would like to retrieve.
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Array of t-shirts matching color.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/TShirtList'
+          '404':
+            description: No t-shirts matching color.
+  /tshirt/{id}:
+    get:
+      summary: Retrieve a t-shirt by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of t-shirt you would like to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirt'
+        '404':
+          description: No t-shirt matching given ID.
+    put:
+      summary: Update a t-shirt by ID
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of t-shirt you would like to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TShirt'
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No t-shirt matching given ID.
+        '422':
+          description: Incomplete t-shirt information.
+    delete:
+      summary: Delete t-shirt by ID.
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          description: ID of t-shirt you would like to delete.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: No t-shirt matching ID.
+  
+  /invoices:
+    post:
+      summary: Creates an invoice.
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+      responses:
+        '201':
+          description: Created invoice object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '422':
+          description: Incomplete t-shirt invoice.
+  
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        esrb_rating:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        studio:
+          type: string
+        quantity:
+          type: integer
+          minimum: 0
+      required: 
+        - id
+        - title
+        - esrb_rating
+        - description
+        - price
+        - studio
+        - quantity
+    Console:
+      type: object
+      properties:
+        id:
+          type: integer
+        model:
+          type: string
+        manufacturer:
+          type: string
+        memory_amount:
+          type: string
+        processor:
+          type: string
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          minimum: 0
+      required: 
+        - id
+        - model
+        - manufacturer
+        - memory_amount
+        - processor
+        - price
+        - quantity
+    TShirt:
+      type: object
+      properties:
+        id:
+          type: integer
+        size:
+          type: string
+        color:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          minimum: 0
+      required: 
+        - id
+        - size
+        - color
+        - description
+        - price
+        - quantity
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          minLength: 2
+          maxLength: 2
+        zipcode:
+          type: string
+        item_type:
+          type: string
+        item_id:
+          type: integer
+        unit_price:
+          type: number
+        quantity:
+          type: integer
+          minimum: 0
+        subtotal:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        processing_fee:
+          type: number
+          format: double
+        total:
+          type: number
+          format: double
+          maximum: 1000
+      required: 
+        - id
+        - name
+        - street
+        - city
+        - state
+        - zipcode
+        - item_type
+        - item_id
+        - quantity
+    GameList:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Game'
+    ConsoleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Console'
+    TShirtList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TShirt'
