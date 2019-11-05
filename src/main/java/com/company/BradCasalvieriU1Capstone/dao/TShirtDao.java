@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.TShirt;
+import com.company.BradCasalvieriU1Capstone.dto.TShirt;
 
 import java.util.List;
 

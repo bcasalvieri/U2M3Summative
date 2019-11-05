@@ -1,10 +1,22 @@
-package com.company.BradCasalvieriU1Capstone.model;
+package com.company.BradCasalvieriU1Capstone.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "processing_fee",
+        indexes = {@Index(name = "ix_product_type_fee", columnList = "product_type, fee")})
 public class ProcessingFee {
+    @Column(name = "product_type", unique = true, length = 20, nullable = false)
     private String productType;
+    @Column(name = "fee", precision = 4, scale = 2)
     private BigDecimal fee;
 
     public String getProductType() {

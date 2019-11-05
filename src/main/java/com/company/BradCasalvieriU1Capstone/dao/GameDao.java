@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.Game;
+import com.company.BradCasalvieriU1Capstone.dto.Game;
 
 import java.util.List;
 

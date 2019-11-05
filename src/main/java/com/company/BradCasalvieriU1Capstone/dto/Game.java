@@ -1,15 +1,30 @@
-package com.company.BradCasalvieriU1Capstone.model;
+package com.company.BradCasalvieriU1Capstone.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "game")
 public class Game {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "game_id", length = 11, unique = true, nullable = false)
     private int id;
+    @Column(length = 50, nullable = false)
     private String title;
+    @Column(name = "esrb_rating", length = 50, nullable = false)
     private String esrbRating;
+    @Column(nullable = false)
     private String description;
+    @Column(precision = 5, scale = 2, nullable = false)
     private BigDecimal price;
+    @Column(length = 50, nullable = false)
     private String studio;
+    @Column(length = 11, nullable = false)
     private int quantity;
 
     public int getId() {

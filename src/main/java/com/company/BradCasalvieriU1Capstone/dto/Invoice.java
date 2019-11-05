@@ -1,22 +1,46 @@
-package com.company.BradCasalvieriU1Capstone.model;
+package com.company.BradCasalvieriU1Capstone.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "invoice")
 public class Invoice {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "invoice_id", length = 11, unique = true, nullable = false)
     private int id;
+    @Column(length = 80, nullable = false)
     private String name;
+    @Column(name = "street_number", length = 10, nullable = false)
+    private int streetNumber;
+    @Column(length = 30, nullable = false)
     private String street;
+    @Column(length = 30, nullable = false)
     private String city;
+    @Column(length = 30, nullable = false)
     private String state;
+    @Column(length = 5, nullable = false)
     private String zipcode;
+    @Column(name = "item_type", length = 20, nullable = false)
     private String itemType;
+    @Column(name = "item_id", length = 11, nullable = false)
     private int itemId;
+    @Column(name = "unit_price", precision = 5, scale = 2, nullable = false)
     private BigDecimal unitPrice;
+    @Column(length = 11, nullable = false)
     private int quantity;
+    @Column(precision = 8, scale = 2, nullable = false)
     private BigDecimal subtotal;
+    @Column(precision = 8, scale = 2, nullable = false)
     private BigDecimal tax;
+    @Column(name = "processing_fee", precision = 8, scale = 2, nullable = false)
     private BigDecimal processingFee;
+    @Column(precision = 8, scale = 2, nullable = false)
     private BigDecimal total;
 
     public int getId() {
@@ -33,6 +57,14 @@ public class Invoice {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
     public String getStreet() {
@@ -137,6 +169,8 @@ public class Invoice {
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
         return id == invoice.id &&
+                streetNumber == invoice.streetNumber &&
+                itemId == invoice.itemId &&
                 quantity == invoice.quantity &&
                 Objects.equals(name, invoice.name) &&
                 Objects.equals(street, invoice.street) &&
@@ -144,7 +178,6 @@ public class Invoice {
                 Objects.equals(state, invoice.state) &&
                 Objects.equals(zipcode, invoice.zipcode) &&
                 Objects.equals(itemType, invoice.itemType) &&
-                Objects.equals(itemId, invoice.itemId) &&
                 Objects.equals(unitPrice, invoice.unitPrice) &&
                 Objects.equals(subtotal, invoice.subtotal) &&
                 Objects.equals(tax, invoice.tax) &&
@@ -154,7 +187,7 @@ public class Invoice {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, street, city, state, zipcode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
+        return Objects.hash(id, name, streetNumber, street, city, state, zipcode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
     }
 
     @Override
@@ -162,12 +195,13 @@ public class Invoice {
         return "Invoice{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", streetNumber=" + streetNumber +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zipcode='" + zipcode + '\'' +
                 ", itemType='" + itemType + '\'' +
-                ", itemId='" + itemId + '\'' +
+                ", itemId=" + itemId +
                 ", unitPrice=" + unitPrice +
                 ", quantity=" + quantity +
                 ", subtotal=" + subtotal +

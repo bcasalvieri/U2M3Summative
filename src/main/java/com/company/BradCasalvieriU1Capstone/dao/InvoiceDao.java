@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.Invoice;
+import com.company.BradCasalvieriU1Capstone.dto.Invoice;
 
 import java.util.List;
 

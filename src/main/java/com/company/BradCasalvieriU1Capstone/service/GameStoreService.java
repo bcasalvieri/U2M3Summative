@@ -2,7 +2,7 @@ package com.company.BradCasalvieriU1Capstone.service;
 
 import com.company.BradCasalvieriU1Capstone.dao.*;
 import com.company.BradCasalvieriU1Capstone.exception.NotFoundException;
-import com.company.BradCasalvieriU1Capstone.model.*;
+import com.company.BradCasalvieriU1Capstone.dto.*;
 import com.company.BradCasalvieriU1Capstone.viewmodel.ConsoleViewModel;
 import com.company.BradCasalvieriU1Capstone.viewmodel.GameViewModel;
 import com.company.BradCasalvieriU1Capstone.viewmodel.InvoiceViewModel;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 

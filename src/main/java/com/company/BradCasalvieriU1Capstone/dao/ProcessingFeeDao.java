@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.ProcessingFee;
+import com.company.BradCasalvieriU1Capstone.dto.ProcessingFee;
 
 import java.util.List;
 

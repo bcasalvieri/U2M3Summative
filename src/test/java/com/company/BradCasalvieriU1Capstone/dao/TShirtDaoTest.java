@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.TShirt;
+import com.company.BradCasalvieriU1Capstone.dto.TShirt;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

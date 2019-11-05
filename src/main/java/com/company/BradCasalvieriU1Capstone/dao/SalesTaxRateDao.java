@@ -1,6 +1,6 @@
 package com.company.BradCasalvieriU1Capstone.dao;
 
-import com.company.BradCasalvieriU1Capstone.model.SalesTaxRate;
+import com.company.BradCasalvieriU1Capstone.dto.SalesTaxRate;
 
 import java.util.List;
 
