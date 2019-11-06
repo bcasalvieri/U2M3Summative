@@ -12,18 +12,19 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 public class GameStoreServiceTest {
-    GameDao gameDao;
-    ConsoleDao consoleDao;
-    TShirtDao tShirtDao;
-    SalesTaxRateDao salesTaxRateDao;
-    ProcessingFeeDao processingFeeDao;
-    InvoiceDao invoiceDao;
+    GameRepository gameRepo;
+    ConsoleRepository consoleRepo;
+    TShirtRepository tShirtRepo;
+    InvoiceRepository invoiceRepo;
+    SalesTaxRateRepository salesTaxRepo;
+    ProcessingFeeRepository processingFeeRepo;
     GameStoreService gameStoreService;
 
     @Before
@@ -34,9 +35,9 @@ public class GameStoreServiceTest {
         setUpInvoiceDaoMock();
         setUpSalesTaxRateDaoMock();
         setUpProcessingFeeDaoMock();
-        gameStoreService = new GameStoreService(gameDao, consoleDao, tShirtDao, salesTaxRateDao, processingFeeDao, invoiceDao);
+        gameStoreService = new GameStoreService(gameRepo, consoleRepo, tShirtRepo, invoiceRepo, salesTaxRepo, processingFeeRepo);
     }
-    
+
     // **********
     // GAME TESTS
     // **********
@@ -123,11 +124,11 @@ public class GameStoreServiceTest {
         List<GameViewModel> fromService = gameStoreService.findGamesByRating(game.getEsrbRating());
         assertEquals(gameList, fromService);
     }
-    
+
     // **********
     // CONSOLE TESTS
     // **********
-    
+
     @Test
     public void shouldSaveAndFindConsole() {
         ConsoleViewModel console = new ConsoleViewModel();
@@ -251,6 +252,7 @@ public class GameStoreServiceTest {
     public void shouldSaveAndFindInvoice() {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
         invoiceViewModel.setName("John Doe");
+        invoiceViewModel.setStreetNumber(101);
         invoiceViewModel.setStreet("Main Street");
         invoiceViewModel.setCity("Jersey City");
         invoiceViewModel.setState("NJ");
@@ -268,6 +270,7 @@ public class GameStoreServiceTest {
     public void shouldFindAllInvoices() {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
         invoiceViewModel.setName("John Doe");
+        invoiceViewModel.setStreetNumber(101);
         invoiceViewModel.setStreet("Main Street");
         invoiceViewModel.setCity("Jersey City");
         invoiceViewModel.setState("NJ");
@@ -282,18 +285,18 @@ public class GameStoreServiceTest {
         List<InvoiceViewModel> fromService = gameStoreService.findAllInvoices();
         assertEquals(invoiceList, fromService);
     }
-    
+
     // **********
     // SET UP METHODS
     // **********
 
     private void setUpGameDaoMock() {
-        gameDao = mock(GameDaoJdbcTemplateImpl.class);
+        gameRepo = mock(GameRepository.class);
 
         Game game = new Game();
         game.setId(1);
         game.setTitle("Madden 2019");
-        game.setEsrbRating("G");
+        game.setRating("G");
         game.setDescription("Newest Madden NFL game.");
         game.setStudio("EA Sports");
         game.setPrice(new BigDecimal("69.99"));
@@ -301,7 +304,7 @@ public class GameStoreServiceTest {
 
         Game game1 = new Game();
         game1.setTitle("Madden 2019");
-        game1.setEsrbRating("G");
+        game1.setRating("G");
         game1.setDescription("Newest Madden NFL game.");
         game1.setStudio("EA Sports");
         game1.setPrice(new BigDecimal("69.99"));
@@ -310,16 +313,16 @@ public class GameStoreServiceTest {
         List<Game> gameList = new ArrayList<>();
         gameList.add(game);
 
-        doReturn(game).when(gameDao).addGame(game1);
-        doReturn(game).when(gameDao).getGameById(1);
-        doReturn(gameList).when(gameDao).getAllGames();
-        doReturn(gameList).when(gameDao).getGamesByStudio("EA Sports");
-        doReturn(gameList).when(gameDao).getGamesByRating("G");
-        doReturn(gameList).when(gameDao).getGameByTitle("Madden 2019");
+        doReturn(game).when(gameRepo).save(game1);
+        doReturn(Optional.of(game)).when(gameRepo).findById(1);
+        doReturn(gameList).when(gameRepo).findAll();
+        doReturn(gameList).when(gameRepo).findByStudio("EA Sports");
+        doReturn(gameList).when(gameRepo).findByRating("G");
+        doReturn(gameList).when(gameRepo).findByTitle("Madden 2019");
     }
 
     private void setUpConsoleDaoMock() {
-        consoleDao = mock(ConsoleDaoJdbcTemplateImpl.class);
+        consoleRepo = mock(ConsoleRepository.class);
 
         Console console = new Console();
         console.setId(1);
@@ -337,18 +340,18 @@ public class GameStoreServiceTest {
         console1.setProcessor("APU");
         console1.setPrice(new BigDecimal("299.99"));
         console1.setQuantity(25);
-        
+
         List<Console> consoleList = new ArrayList<>();
         consoleList.add(console);
-        
-        doReturn(console).when(consoleDao).addConsole(console1);
-        doReturn(console).when(consoleDao).getConsoleById(1);
-        doReturn(consoleList).when(consoleDao).getAllConsoles();
-        doReturn(consoleList).when(consoleDao).getConsolesByManufacturer("Sony");
+
+        doReturn(console).when(consoleRepo).save(console1);
+        doReturn(Optional.of(console)).when(consoleRepo).findById(1);
+        doReturn(consoleList).when(consoleRepo).findAll();
+        doReturn(consoleList).when(consoleRepo).findByManufacturer("Sony");
     }
 
     private void setUpTShirtDaoMock() {
-        tShirtDao = mock(TShirtDaoJdbcTemplateImpl.class);
+        tShirtRepo = mock(TShirtRepository.class);
 
         TShirt tShirt = new TShirt();
         tShirt.setId(1);
@@ -368,19 +371,20 @@ public class GameStoreServiceTest {
         List<TShirt> tShirtList = new ArrayList<>();
         tShirtList.add(tShirt);
 
-        doReturn(tShirt).when(tShirtDao).addTShirt(tShirt1);
-        doReturn(tShirt).when(tShirtDao).getTShirtById(1);
-        doReturn(tShirtList).when(tShirtDao).getAllTShirts();
-        doReturn(tShirtList).when(tShirtDao).getTShirtsBySize("X-Large");
-        doReturn(tShirtList).when(tShirtDao).getTShirtsByColor("Red");
+        doReturn(tShirt).when(tShirtRepo).save(tShirt1);
+        doReturn(Optional.of(tShirt)).when(tShirtRepo).findById(1);
+        doReturn(tShirtList).when(tShirtRepo).findAll();
+        doReturn(tShirtList).when(tShirtRepo).findBySize("X-Large");
+        doReturn(tShirtList).when(tShirtRepo).findByColor("Red");
     }
 
     private void setUpInvoiceDaoMock() {
-        invoiceDao = mock(InvoiceDaoJdbcTemplateImpl.class);
+        invoiceRepo = mock(InvoiceRepository.class);
 
         Invoice invoice = new Invoice();
         invoice.setId(1);
         invoice.setName("John Doe");
+        invoice.setStreetNumber(101);
         invoice.setStreet("Main Street");
         invoice.setCity("Jersey City");
         invoice.setState("NJ");
@@ -396,6 +400,7 @@ public class GameStoreServiceTest {
 
         Invoice invoice1 = new Invoice();
         invoice1.setName("John Doe");
+        invoice1.setStreetNumber(101);
         invoice1.setStreet("Main Street");
         invoice1.setCity("Jersey City");
         invoice1.setState("NJ");
@@ -412,30 +417,30 @@ public class GameStoreServiceTest {
         List<Invoice> invoiceList = new ArrayList<>();
         invoiceList.add(invoice);
 
-        doReturn(invoice).when(invoiceDao).addInvoice(invoice1);
-        doReturn(invoice).when(invoiceDao).getInvoiceById(1);
-        doReturn(invoiceList).when(invoiceDao).getAllInvoices();
+        doReturn(invoice).when(invoiceRepo).save(invoice1);
+        doReturn(Optional.of(invoice)).when(invoiceRepo).findById(1);
+        doReturn(invoiceList).when(invoiceRepo).findAll();
     }
 
     private void setUpSalesTaxRateDaoMock() {
-        salesTaxRateDao = mock(SalesTaxRateDaoJdbcTemplateImpl.class);
+        salesTaxRepo = mock(SalesTaxRateRepository.class);
 
         SalesTaxRate salesTaxRate = new SalesTaxRate();
         salesTaxRate.setState("NJ");
         salesTaxRate.setRate(new BigDecimal(".06"));
 
-        doReturn(salesTaxRate).when(salesTaxRateDao).addSalesTaxRate(salesTaxRate);
-        doReturn(salesTaxRate).when(salesTaxRateDao).getSalesTaxRateByState("NJ");
+        doReturn(salesTaxRate).when(salesTaxRepo).save(salesTaxRate);
+        doReturn(salesTaxRate).when(salesTaxRepo).findByState("NJ");
     }
 
     private void setUpProcessingFeeDaoMock() {
-        processingFeeDao = mock(ProcessingFeeDaoJdbcTemplateImpl.class);
+        processingFeeRepo = mock(ProcessingFeeRepository.class);
 
         ProcessingFee processingFee = new ProcessingFee();
         processingFee.setProductType("Console");
         processingFee.setFee(new BigDecimal("14.99"));
 
-        doReturn(processingFee).when(processingFeeDao).addProcessingFee(processingFee);
-        doReturn(processingFee).when(processingFeeDao).getProcessingFeeByType("Console");
+        doReturn(processingFee).when(processingFeeRepo).save(processingFee);
+        doReturn(processingFee).when(processingFeeRepo).findByProductType("Console");
     }
 }

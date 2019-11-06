@@ -2,18 +2,15 @@ package com.company.BradCasalvieriU1Capstone.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "sales_tax_rate",
-        indexes = {@Index(name = "ix_state_rate", columnList = "state, rate")})
+@Table(name = "sales_tax_rate")
 public class SalesTaxRate {
+    @Id
     @Column(name = "state", unique = true, length = 2, nullable = false)
     private String state;
     @Column(name = "rate", precision = 3, scale = 2, nullable = false)

@@ -11,13 +11,13 @@ import java.util.Objects;
 @Table(name = "game")
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id", length = 11, unique = true, nullable = false)
     private int id;
     @Column(length = 50, nullable = false)
     private String title;
     @Column(name = "esrb_rating", length = 50, nullable = false)
-    private String esrbRating;
+    private String rating;
     @Column(nullable = false)
     private String description;
     @Column(precision = 5, scale = 2, nullable = false)
@@ -43,12 +43,12 @@ public class Game {
         this.title = title;
     }
 
-    public String getEsrbRating() {
-        return esrbRating;
+    public String getRating() {
+        return rating;
     }
 
-    public void setEsrbRating(String esrbRating) {
-        this.esrbRating = esrbRating;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getDescription() {
@@ -91,7 +91,7 @@ public class Game {
         return id == game.id &&
                 quantity == game.quantity &&
                 Objects.equals(title, game.title) &&
-                Objects.equals(esrbRating, game.esrbRating) &&
+                Objects.equals(rating, game.rating) &&
                 Objects.equals(description, game.description) &&
                 Objects.equals(price, game.price) &&
                 Objects.equals(studio, game.studio);
@@ -99,7 +99,7 @@ public class Game {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, esrbRating, description, price, studio, quantity);
+        return Objects.hash(id, title, rating, description, price, studio, quantity);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", esrbRating='" + esrbRating + '\'' +
+                ", esrbRating='" + rating + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", studio='" + studio + '\'' +

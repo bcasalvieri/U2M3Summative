@@ -129,7 +129,7 @@ public class GameStoreController {
     public void deleteConsole(@PathVariable int id) {
         gameStoreService.removeConsole(id);
     }
-    
+
     // **********
     // T SHIRT ROUTES
     // **********

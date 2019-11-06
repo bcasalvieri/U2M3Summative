@@ -11,7 +11,7 @@ import java.util.Objects;
 @Table(name = "console")
 public class Console {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "console_id", length = 11, nullable = false)
     private int id;
     @Column(length = 50, nullable = false)

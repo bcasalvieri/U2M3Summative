@@ -11,6 +11,8 @@ public class InvoiceViewModel {
     private int id;
     @NotEmpty(message = "Please enter a name.")
     private String name;
+    @NotNull(message = "Please enter a street number.")
+    private Integer streetNumber;
     @NotEmpty(message = "Please enter a street.")
     private String street;
     @NotEmpty(message = "Please enter a city.")
@@ -48,6 +50,14 @@ public class InvoiceViewModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(Integer streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
     public String getStreet() {
@@ -153,6 +163,7 @@ public class InvoiceViewModel {
         InvoiceViewModel that = (InvoiceViewModel) o;
         return id == that.id &&
                 Objects.equals(name, that.name) &&
+                Objects.equals(streetNumber, that.streetNumber) &&
                 Objects.equals(street, that.street) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(state, that.state) &&
@@ -169,7 +180,7 @@ public class InvoiceViewModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, street, city, state, zipcode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
+        return Objects.hash(id, name, streetNumber, street, city, state, zipcode, itemType, itemId, unitPrice, quantity, subtotal, tax, processingFee, total);
     }
 
     @Override
@@ -177,6 +188,7 @@ public class InvoiceViewModel {
         return "InvoiceViewModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", streetNumber=" + streetNumber +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +

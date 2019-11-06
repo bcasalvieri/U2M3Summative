@@ -11,7 +11,7 @@ import java.util.Objects;
 @Table(name = "invoice")
 public class Invoice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "invoice_id", length = 11, unique = true, nullable = false)
     private int id;
     @Column(length = 80, nullable = false)

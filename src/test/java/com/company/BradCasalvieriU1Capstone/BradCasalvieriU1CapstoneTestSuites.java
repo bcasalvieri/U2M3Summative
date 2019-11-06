@@ -8,12 +8,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        GameDaoTest.class,
-        ConsoleDaoTest.class,
-        TShirtDaoTest.class,
-        InvoiceDaoTest.class,
-        SalesTaxRateDaoTest.class,
-        ProcessingFeeDaoTest.class,
+        GameRepositoryTest.class,
+        ConsoleRepositoryTest.class,
+        TShirtRepositoryTest.class,
+        SalesTaxRateRepositoryTest.class,
+        ProcessingFeeRepositoryTest.class,
         GameStoreServiceTest.class,
         GameStoreControllerTest.class
 })

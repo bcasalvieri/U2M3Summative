@@ -199,7 +199,7 @@ public class GameStoreControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
-    
+
     // **********
     // CONSOLE TESTS
     // **********
@@ -324,7 +324,7 @@ public class GameStoreControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
-    
+
     // **********
     // TSHIRT TESTS
     // **********
@@ -453,7 +453,7 @@ public class GameStoreControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
-    
+
     // **********
     // INVOICE TESTS
     // **********
@@ -462,6 +462,7 @@ public class GameStoreControllerTest {
     public void shouldPostInvoiceAndReturn201StatusCode() throws Exception {
         InvoiceViewModel inputInvoice = new InvoiceViewModel();
         inputInvoice.setName("John Doe");
+        inputInvoice.setStreetNumber(101);
         inputInvoice.setStreet("Main Street");
         inputInvoice.setCity("Jersey City");
         inputInvoice.setState("NJ");
@@ -469,7 +470,7 @@ public class GameStoreControllerTest {
         inputInvoice.setItemType("Console");
         inputInvoice.setItemId(1);
         inputInvoice.setQuantity(1);
-        
+
         String inputJson = mapper.writeValueAsString(inputInvoice);
 
         InvoiceViewModel outputInvoice = invoiceViewModelList.get(0);
@@ -490,6 +491,7 @@ public class GameStoreControllerTest {
     public void shouldReturn422ErrorWhenPostingInvoice() throws Exception {
         InvoiceViewModel inputInvoice = new InvoiceViewModel();
         inputInvoice.setName("John Doe");
+        inputInvoice.setStreetNumber(101);
         inputInvoice.setStreet("Main Street");
         inputInvoice.setCity("Jersey City");
         inputInvoice.setState("NJ");
@@ -535,7 +537,7 @@ public class GameStoreControllerTest {
         gameViewModelList = new ArrayList<>();
         gameViewModelList.add(game);
     }
-    
+
     private void setUpConsoleTestObjects() {
         ConsoleViewModel console = new ConsoleViewModel();
         console.setId(1);
@@ -549,7 +551,7 @@ public class GameStoreControllerTest {
         consoleViewModelList = new ArrayList<>();
         consoleViewModelList.add(console);
     }
-    
+
     private void setUpTShirtTestObjects() {
         TShirtViewModel tShirt = new TShirtViewModel();
         tShirt.setId(1);
@@ -558,15 +560,16 @@ public class GameStoreControllerTest {
         tShirt.setDescription("Red shirt");
         tShirt.setPrice(new BigDecimal("25.99"));
         tShirt.setQuantity(20);
-        
+
         tShirtViewModelList = new ArrayList<>();
         tShirtViewModelList.add(tShirt);
     }
-    
+
     private void setUpInvoiceTestObjects() {
         InvoiceViewModel invoice = new InvoiceViewModel();
         invoice.setId(1);
         invoice.setName("John Doe");
+        invoice.setStreetNumber(101);
         invoice.setStreet("Main Street");
         invoice.setCity("Jersey City");
         invoice.setState("NJ");
@@ -579,7 +582,7 @@ public class GameStoreControllerTest {
         invoice.setTax(new BigDecimal("18.00"));
         invoice.setProcessingFee(new BigDecimal("14.99"));
         invoice.setTotal(new BigDecimal("332.98"));
-        
+
         invoiceViewModelList = new ArrayList<>();
         invoiceViewModelList.add(invoice);
     }
@@ -670,6 +673,7 @@ public class GameStoreControllerTest {
         InvoiceViewModel invoice = new InvoiceViewModel();
         invoice.setId(1);
         invoice.setName("John Doe");
+        invoice.setStreetNumber(101);
         invoice.setStreet("Main Street");
         invoice.setCity("Jersey City");
         invoice.setState("NJ");
@@ -685,6 +689,7 @@ public class GameStoreControllerTest {
 
         InvoiceViewModel invoice1 = new InvoiceViewModel();
         invoice1.setName("John Doe");
+        invoice1.setStreetNumber(101);
         invoice1.setStreet("Main Street");
         invoice1.setCity("Jersey City");
         invoice1.setState("NJ");
